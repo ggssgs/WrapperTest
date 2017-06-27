@@ -19,7 +19,7 @@ namespace WrapperTest
         static string outTopic = "Haptic/Demo";
         static string inTopic = "Haptic/Force";
         static int counter = 0;
-        static byte[] outData = new byte[8 * sizeof(float) + sizeof(bool)];
+        static byte[] outData = new byte[8 * sizeof(double) + sizeof(bool)];
 
         static void ShowPosition()
         {
@@ -32,15 +32,15 @@ namespace WrapperTest
             //client.Publish(topic, Encoding.ASCII.GetBytes(openHaptics.jointAngle1.ToString("+000.00;-000.00") + " " + openHaptics.jointAngle2.ToString("+000.00;-000.00") + " " + openHaptics.jointAngle3.ToString("+000.00;-000.00") + " " + openHaptics.outRotX.ToString() + " " + openHaptics.outRotY.ToString() + " " + openHaptics.outRotZ.ToString()), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
             //client.Publish(outTopic, Encoding.ASCII.GetBytes(openHaptics.outX.ToString() + " " + openHaptics.outY.ToString() + " " + openHaptics.outZ.ToString() + " " + openHaptics.outRotHandleX.ToString() + " " + openHaptics.outRotHandleY.ToString() + " " + openHaptics.outRotX.ToString() + " " + openHaptics.outRotY.ToString() + " " + openHaptics.outRotZ.ToString() + " " + openHaptics.bButtonState.ToString()), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
             
-            BitConverter.GetBytes((float)openHaptics.outX).CopyTo(outData, 0);
-            BitConverter.GetBytes((float)openHaptics.outY).CopyTo(outData, 1 * sizeof(float));
-            BitConverter.GetBytes((float)openHaptics.outZ).CopyTo(outData, 2 * sizeof(float));
-            BitConverter.GetBytes((float)openHaptics.outRotHandleX).CopyTo(outData, 3 * sizeof(float));
-            BitConverter.GetBytes((float)openHaptics.outRotHandleY).CopyTo(outData, 4 * sizeof(float));
-            BitConverter.GetBytes((float)openHaptics.outRotX).CopyTo(outData, 5 * sizeof(float));
-            BitConverter.GetBytes((float)openHaptics.outRotY).CopyTo(outData, 6 * sizeof(float));
-            BitConverter.GetBytes((float)openHaptics.outRotZ).CopyTo(outData, 7 * sizeof(float));
-            BitConverter.GetBytes(openHaptics.bButtonState).CopyTo(outData, 8 * sizeof(float));
+            BitConverter.GetBytes(openHaptics.outX).CopyTo(outData, 0);
+            BitConverter.GetBytes(openHaptics.outY).CopyTo(outData, 1 * sizeof(double));
+            BitConverter.GetBytes(openHaptics.outZ).CopyTo(outData, 2 * sizeof(double));
+            BitConverter.GetBytes(openHaptics.outRotHandleX).CopyTo(outData, 3 * sizeof(double));
+            BitConverter.GetBytes(openHaptics.outRotHandleY).CopyTo(outData, 4 * sizeof(double));
+            BitConverter.GetBytes(openHaptics.outRotX).CopyTo(outData, 5 * sizeof(double));
+            BitConverter.GetBytes(openHaptics.outRotY).CopyTo(outData, 6 * sizeof(double));
+            BitConverter.GetBytes(openHaptics.outRotZ).CopyTo(outData, 7 * sizeof(double));
+            BitConverter.GetBytes(openHaptics.bButtonState).CopyTo(outData, 8 * sizeof(double));
             
             client.Publish(outTopic, outData, MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
             //Console.WriteLine(counter++);
@@ -77,12 +77,12 @@ namespace WrapperTest
 
         private static void Client_MqttMsgPublishReceivedFollow(object sender, MqttMsgPublishEventArgs e)
         {
-            openHaptics.inX = BitConverter.ToSingle(e.Message, 0);
-            openHaptics.inY = BitConverter.ToSingle(e.Message, 1 * sizeof(float))/* + 200*/;
-            openHaptics.inZ = BitConverter.ToSingle(e.Message, 2 * sizeof(float));
-            openHaptics.inRotX = BitConverter.ToSingle(e.Message, 5 * sizeof(float));
-            openHaptics.inRotY = BitConverter.ToSingle(e.Message, 6 * sizeof(float)) + 0.2;
-            openHaptics.inRotZ = BitConverter.ToSingle(e.Message, 7 * sizeof(float)); ;
+            openHaptics.inX = BitConverter.ToDouble(e.Message, 0);
+            openHaptics.inY = BitConverter.ToDouble(e.Message, 1 * sizeof(double))/* + 200*/;
+            openHaptics.inZ = BitConverter.ToDouble(e.Message, 2 * sizeof(double));
+            openHaptics.inRotX = BitConverter.ToDouble(e.Message, 5 * sizeof(double));
+            openHaptics.inRotY = BitConverter.ToDouble(e.Message, 6 * sizeof(double)) + 0.2;
+            openHaptics.inRotZ = BitConverter.ToDouble(e.Message, 7 * sizeof(double)); ;
 
             //Console.WriteLine(message);
             Console.WriteLine(openHaptics.inX.ToString() + " " + openHaptics.inY.ToString() + " " + openHaptics.inZ.ToString() + " " + openHaptics.inRotX.ToString() + " " + openHaptics.inRotY.ToString() + " " + openHaptics.inRotZ.ToString());
@@ -96,9 +96,9 @@ namespace WrapperTest
             openHaptics.inForceZ = BitConverter.ToDouble(e.Message, 2 * sizeof(double));
             openHaptics.isForceInput = BitConverter.ToBoolean(e.Message, 3 * sizeof(double));
             */
-            openHaptics.inX = BitConverter.ToSingle(e.Message, 0);
-            openHaptics.inY = BitConverter.ToSingle(e.Message, 1 * sizeof(float));
-            openHaptics.inZ = BitConverter.ToSingle(e.Message, 2 * sizeof(float));
+            openHaptics.inX = BitConverter.ToDouble(e.Message, 0);
+            openHaptics.inY = BitConverter.ToDouble(e.Message, 1 * sizeof(double));
+            openHaptics.inZ = BitConverter.ToDouble(e.Message, 2 * sizeof(double));
 
             Console.WriteLine(openHaptics.inX.ToString() + " " + openHaptics.inY.ToString() + " " + openHaptics.inZ.ToString() + " " + openHaptics.isForceInput.ToString());
             //Console.WriteLine(Encoding.ASCII.GetString(e.Message));
