@@ -12,7 +12,7 @@ namespace WrapperTest
     class Program
     {
         static bool isFollowing = false;
-        static OpenHaptics openHaptics = new OpenHaptics(true, false);
+        static OpenHaptics openHaptics = new OpenHaptics(false, false);
         static MqttClient client = new MqttClient("13.228.3.82");
         //static MqttClient client = new MqttClient("155.69.21.187");
         //static MqttClient client = new MqttClient("116.197.193.105");
@@ -43,7 +43,7 @@ namespace WrapperTest
             BitConverter.GetBytes(openHaptics.bButtonState).CopyTo(outData, 8 * sizeof(float));
             
             client.Publish(outTopic, outData, MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
-            //Console.WriteLine(counter++);
+            Console.WriteLine(counter++);
         }
 
         static void Test()
