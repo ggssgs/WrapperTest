@@ -13,7 +13,8 @@ namespace WrapperTest
     {
         static bool isFollowing = false;
         static OpenHaptics openHaptics = new OpenHaptics(false, false);
-        static MqttClient client = new MqttClient("13.228.3.82");
+        static MqttClient client = new MqttClient("localhost");
+        //static MqttClient client = new MqttClient("13.228.3.82");
         //static MqttClient client = new MqttClient("155.69.21.187");
         //static MqttClient client = new MqttClient("116.197.193.105");
         static string outTopic = "Haptic/Demo";
